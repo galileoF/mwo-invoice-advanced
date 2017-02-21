@@ -1,16 +1,22 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
+	
+	private ArrayList<Product> products;
+	
 	public void addProduct(Product product) {
-		// TODO: implement
+		this.products.add(product);
 	}
 
 	public void addProduct(Product product, Integer quantity) {
-		// TODO: implement
+		if (quantity <= 0){
+			throw new IllegalArgumentException("Wrong quantity");
+		}
 	}
 
 	public BigDecimal getSubtotal() {
