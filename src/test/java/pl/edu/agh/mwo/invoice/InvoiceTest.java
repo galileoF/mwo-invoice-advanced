@@ -4,13 +4,15 @@ import static org.junit.Assert.assertEquals;
 
 import java.math.BigDecimal;
 
+import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Test;
 
-import pl.edu.agh.mwo.invoice.Invoice;
 import pl.edu.agh.mwo.invoice.product.DairyProduct;
 import pl.edu.agh.mwo.invoice.product.OtherProduct;
 import pl.edu.agh.mwo.invoice.product.Product;
 import pl.edu.agh.mwo.invoice.product.TaxFreeProduct;
+
 
 public class InvoiceTest {
 	private static final String PRODUCT_1 = "Product 1";
@@ -97,6 +99,25 @@ public class InvoiceTest {
 	public void testInvoiceWithNegativeQuantity() {
 		Invoice invoice = createEmptyInvoice();
 		invoice.addProduct(createTaxFreeProduct(), -1);
+	}
+	@Test
+	public void testInvoiceHasNumberGreaterThanZero(){
+		Invoice invoice = createEmptyInvoice();
+		Assert.assertThat(invoice.getNumber(), Matchers.greaterThan(10));
+		
+	}
+	@Test
+	public void testManyInvoicesHaveDifferentNumbers(){
+		Invoice invoice = createEmptyInvoice();
+		Invoice invoice2 = createEmptyInvoice();
+		Assert.assertNotEquals(invoice.getNumber(), invoice2.getNumber());
+	}
+	
+	@Test
+	public void testNextInvoiceNumberHasSubsequentNumber(){
+		Invoice invoice = createEmptyInvoice();
+		Invoice invoice2 = createEmptyInvoice();
+		Assert.assertEquals(1, invoice2.getNumber() - invoice.getNumber());
 	}
 
 	private Invoice createEmptyInvoice() {

@@ -4,10 +4,20 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
 	private Map<Product, Integer> products = new HashMap<Product, Integer>();
+	
+	private int invoiceNumber;
+	
+	private static int nextNumber = 1;
+	
+	public Invoice(){
+		this.invoiceNumber = nextNumber;
+		nextNumber += 1;
+	}
 
 	public void addProduct(Product product) {
 		addProduct(product, 1);
@@ -41,4 +51,12 @@ public class Invoice {
 		}
 		return totalGross;
 	}
+	public int getNumber() {
+		// TODO Auto-generated method stub
+		return invoiceNumber;
+	}
+	
+
+	
+	
 }
