@@ -11,7 +11,7 @@ public class Invoice {
 	private Map<Product, Integer> products = new HashMap<Product, Integer>();
 	
 	private int invoiceNumber;
-	
+	private Product product;
 	private static int nextNumber = 1;
 	
 	public Invoice(){
@@ -55,6 +55,17 @@ public class Invoice {
 		// TODO Auto-generated method stub
 		return invoiceNumber;
 	}
+
+	public String printedVersion() {
+		// TODO Auto-generated method stub
+		String print = String.valueOf(invoiceNumber);
+		for(Product product : products.keySet()){
+			print += "\n" + product.getName() + "\n" + product.getClass().getSimpleName() + "\n" + String.valueOf(products.get(product));
+					}
+		return print;
+	}
+
+	
 	
 
 	

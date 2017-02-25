@@ -103,7 +103,7 @@ public class InvoiceTest {
 	@Test
 	public void testInvoiceHasNumberGreaterThanZero(){
 		Invoice invoice = createEmptyInvoice();
-		Assert.assertThat(invoice.getNumber(), Matchers.greaterThan(10));
+		Assert.assertThat(invoice.getNumber(), Matchers.greaterThan(0));
 		
 	}
 	@Test
@@ -118,6 +118,41 @@ public class InvoiceTest {
 		Invoice invoice = createEmptyInvoice();
 		Invoice invoice2 = createEmptyInvoice();
 		Assert.assertEquals(1, invoice2.getNumber() - invoice.getNumber());
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasNumber(){
+		Invoice invoice = createEmptyInvoice();
+		String printed = invoice.printedVersion();
+		String invoiceNumber = String.valueOf(invoice.getNumber());
+		Assert.assertThat(printed, Matchers.containsString(invoiceNumber));
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasProductName(){
+		Invoice invoice = createEmptyInvoice();
+		Product mleko = new DairyProduct("mleko", new BigDecimal("200"));
+		invoice.addProduct(mleko);
+		String printed = invoice.printedVersion();
+		Assert.assertThat(printed, Matchers.containsString("mleko"));
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasProductType(){
+		Invoice invoice = createEmptyInvoice();
+		Product mleko = new DairyProduct("mleko", new BigDecimal("200"));
+		invoice.addProduct(mleko);
+		String printed = invoice.printedVersion();
+		Assert.assertThat(printed, Matchers.containsString("DairyProduct"));
+	}
+	
+	@Test
+	public void testPrintedInvoiceHasQuantity(){
+		Invoice invoice = createEmptyInvoice();
+		Product mleko = new DairyProduct("mleko", new BigDecimal("200"));
+		invoice.addProduct(mleko, 123);
+		String printed = invoice.printedVersion();
+		Assert.assertThat(printed, Matchers.containsString("123"));
 	}
 
 	private Invoice createEmptyInvoice() {
